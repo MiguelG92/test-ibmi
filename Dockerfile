@@ -10,11 +10,14 @@ RUN curl https://public.dhe.ibm.com/software/ibmi/products/odbc/rpms/ibmi-acs.re
 RUN dnf -y install --refresh ibm-iaccess
 RUN dnf clean all
 
-
-# Create app directory (with user `node`)
+# Create 'node' user and app directory
+RUN useradd -m -r -s /bin/bash node
 RUN mkdir -p /home/node/app
 
 WORKDIR /home/node/app
+
+# Switch to 'node' user
+USER node
 
 # Install app dependencies
 # A wildcard is used to ensure both package.json AND package-lock.json are copied
