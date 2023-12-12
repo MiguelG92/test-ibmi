@@ -16,16 +16,17 @@ RUN mkdir -p /home/node/app
 
 WORKDIR /home/node/app
 
-# Switch to 'node' user
 USER node
+
+# Set npm prefix to a directory where the 'node' user has write permissions
+RUN mkdir -p /home/node/.npm-global
+ENV NPM_CONFIG_PREFIX=/home/node/.npm-global
+ENV PATH=$PATH:/home/node/.npm-global/bin
 
 # Install app dependencies
 # A wildcard is used to ensure both package.json AND package-lock.json are copied
 # where available (npm@5+)
 COPY --chown=node package*.json ./
-
-
-RUN mkdir -p /usr/lib/node_modules && chown -R node:node /usr/lib/node_modules
 
 RUN npm install
 
