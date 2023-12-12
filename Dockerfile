@@ -10,18 +10,11 @@ RUN curl https://public.dhe.ibm.com/software/ibmi/products/odbc/rpms/ibmi-acs.re
 RUN dnf -y install --refresh ibm-iaccess
 RUN dnf clean all
 
-# Create 'node' user and app directory
-RUN useradd -m -r -s /bin/bash node
+
+# Create app directory (with user `node`)
 RUN mkdir -p /home/node/app
 
 WORKDIR /home/node/app
-
-USER node
-
-# Set npm prefix to a directory where the 'node' user has write permissions
-RUN mkdir -p /home/node/.npm-global
-ENV NPM_CONFIG_PREFIX=/home/node/.npm-global
-ENV PATH=$PATH:/home/node/.npm-global/bin
 
 # Install app dependencies
 # A wildcard is used to ensure both package.json AND package-lock.json are copied
