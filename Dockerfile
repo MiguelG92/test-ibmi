@@ -24,6 +24,9 @@ USER node
 # where available (npm@5+)
 COPY --chown=node package*.json ./
 
+
+RUN mkdir -p /usr/lib/node_modules && chown -R node:node /usr/lib/node_modules
+
 RUN npm install
 
 # Bundle app source code
